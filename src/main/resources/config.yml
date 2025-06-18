@@ -1,0 +1,3 @@
+crate-giveall-announcement: "<red><bold>Everyone received {amount} of {crate} keys!"
+already-opening-crate: "<red>Please wait! You are already opening a crate!"
+wrong-key: "<red>This key is not made for that crate ;)"

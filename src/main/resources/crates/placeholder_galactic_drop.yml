@@ -1,0 +1,75 @@
+crate:
+  crate-name: "placeholder_galactic_drop"
+  animation-id: "galactic_drop"
+  key-item: TRIPWIRE_HOOK
+  crate-display-name: "<gold><bold>Galactic Drop Crate"
+  crate-block: ENDER_CHEST
+  crate-rewards:
+    1:
+      item: DIAMOND_SWORD
+      amount: 1
+      weight: 3
+      enchants:
+        1:
+          type: SHARPNESS
+          level: 1
+      displayName: "<aqua>Legendary Sword"
+      lore:
+        - "<gray>Sharp and shiny"
+        - "<green>+10 Damage"
+    2:
+      item: DIAMOND_AXE
+      amount: 1
+      weight: 1
+      enchants:
+        1:
+          type: SHARPNESS
+          level: 1
+      displayName: "<aqua>Legendary Axe"
+      lore:
+        - "<gray>Sharp and shiny"
+        - "<green>+12 Damage"
+    3:
+      item: NETHERITE_INGOT
+      amount: 3
+      weight: 5
+      displayName: "<gray>Netherite Ingot"
+      lore:
+        - "<white>Rare upgrade material"
+    4:
+      item: ENCHANTED_GOLDEN_APPLE
+      amount: 1
+      weight: 2
+      displayName: "<gold>God Apple"
+      lore:
+        - "<light_purple>Eat like a king"
+    5:
+      item: ELYTRA
+      amount: 1
+      weight: 1
+      displayName: "<aqua>Sky Wings"
+      lore:
+        - "<gray>Take to the skies"
+    6:
+      item: DIAMOND
+      amount: 32
+      weight: 6
+      displayName: "<aqua>Stack of Diamonds"
+    7:
+      item: EXPERIENCE_BOTTLE
+      amount: 64
+      weight: 7
+      displayName: "<green>XP Splash"
+      lore:
+        - "<gray>Useful for enchanting"
+    8:
+      item: GOLD
+      amount: 32
+      weight: 6
+      displayName: "<aqua>Stack of Gold"
+
+    9:
+      item: EMERALD
+      amount: 32
+      weight: 6
+      displayName: "<aqua>Stack of Emerald"
