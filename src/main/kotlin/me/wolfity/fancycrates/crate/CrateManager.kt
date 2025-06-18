@@ -18,28 +18,33 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 class CrateManager(private val loadedCrates: List<CrateConfig>) {
 
-    private val crateMap: MutableMap<String, CrateConfig> = mutableMapOf()
+    private val crateMap: ConcurrentMap<String, CrateConfig> = ConcurrentHashMap()
 
     init {
-        loadCrates()
-        plugin.logger.info("[Fancy Crates] A total of ${crateMap.size} crates have been loaded! (${crateMap.keys.toList()})")
+        launchAsync {
+            loadCrates()
+            plugin.logger.info("[Fancy Crates] A total of ${crateMap.size} crates have been loaded! (${crateMap.keys.toList()})")
+        }
     }
 
-    fun loadCrates() {
+    private suspend fun loadCrates() {
         val crates = loadedCrates
         crateMap.clear()
         for (crate in crates) {
             crateMap[crate.name] = crate
         }
-        launchAsync {
-            val allCrates = getCrateLocations()
+        val allCrates = getCrateLocations()
+        runSync {
+            val invalidCrateLocations = mutableListOf<CrateLocation>()
 
-            runSync {
-                allCrates.forEach { crateLoc ->
-                    val crate = crateMap[crateLoc.crateId]!!
+            allCrates.forEach { crateLoc ->
+                val crate = crateMap[crateLoc.crateId]
+                if (crate != null) {
                     val location = Location(Bukkit.getWorld(crateLoc.world), crateLoc.x, crateLoc.y, crateLoc.z)
 
                     location.block.type = crate.crateBlock
@@ -58,8 +63,11 @@ class CrateManager(private val loadedCrates: List<CrateConfig>) {
                     crateLoc.addCrateHologram(crate)
 
                     block.state.update(true, true)
+                } else {
+                    invalidCrateLocations.add(crateLoc)
                 }
             }
+            launchAsync { deleteCrateLocationsBatch(invalidCrateLocations) }
         }
     }
 
@@ -81,6 +89,48 @@ class CrateManager(private val loadedCrates: List<CrateConfig>) {
             }
         }
     }
+
+    private suspend fun deleteCrateLocationsBatch(locations: List<CrateLocation>): List<CrateLocation> =
+        newSuspendedTransaction {
+            val deleted = mutableListOf<CrateLocation>()
+
+            locations.forEach { loc ->
+                val row = CrateLocations
+                    .selectAll().where {
+                        (CrateLocations.world eq loc.world) and
+                                (CrateLocations.x eq loc.x) and
+                                (CrateLocations.y eq loc.y) and
+                                (CrateLocations.z eq loc.z) and
+                                (CrateLocations.crateId eq loc.crateId)
+                    }
+                    .firstOrNull()
+
+                row?.let { resultRow ->
+                    val idToDelete = resultRow[CrateLocations.id]
+
+                    CrateLocations.deleteWhere { CrateLocations.id eq idToDelete }
+
+                    val blockFace = resultRow[CrateLocations.blockFace]?.let {
+                        runCatching { BlockFace.valueOf(it) }.getOrNull()
+                    }
+
+                    deleted.add(
+                        CrateLocation(
+                            id = resultRow[CrateLocations.id],
+                            crateId = resultRow[CrateLocations.crateId],
+                            world = resultRow[CrateLocations.world],
+                            x = resultRow[CrateLocations.x],
+                            y = resultRow[CrateLocations.y],
+                            z = resultRow[CrateLocations.z],
+                            blockFace = blockFace
+                        )
+                    )
+                }
+            }
+
+            deleted
+        }
+
 
     suspend fun placeCrateLocation(location: Location, crateIdKey: String, face: BlockFace?): CrateLocation =
         newSuspendedTransaction {
