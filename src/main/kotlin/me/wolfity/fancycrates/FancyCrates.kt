@@ -5,7 +5,6 @@ import me.wolfity.developmentutil.files.CustomConfig
 import me.wolfity.developmentutil.player.PlayerManager
 import me.wolfity.fancycrates.animation.AnimationRegistry
 import me.wolfity.fancycrates.commands.CrateCommands
-import me.wolfity.fancycrates.commands.TestAnimationCommand
 import me.wolfity.fancycrates.commands.params.*
 import me.wolfity.fancycrates.crate.CrateLoader
 import me.wolfity.fancycrates.crate.CrateManager
@@ -79,7 +78,6 @@ class FancyCrates : JavaPlugin() {
     }
 
     private fun registerCommands() {
-        lamp.register(TestAnimationCommand())
         lamp.register(CrateCommands())
     }
 
