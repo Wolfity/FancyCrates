@@ -6,12 +6,12 @@ import me.wolfity.developmentutil.util.getData
 import me.wolfity.developmentutil.util.launchAsync
 import me.wolfity.developmentutil.util.sendStyled
 import me.wolfity.fancycrates.commands.CrateCommands
+import me.wolfity.fancycrates.gui.CratePreviewGUI
 import me.wolfity.fancycrates.plugin
 import me.wolfity.fancycrates.util.addCrateHologram
 import me.wolfity.fancycrates.util.toCleanString
 import org.bukkit.Sound
 import org.bukkit.block.data.Directional
-import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -37,50 +37,63 @@ class CrateListeners : Listener {
     @EventHandler
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player
+        val action = event.action
         val crate = event.clickedBlock ?: return
+
         val crateId = crate.getMetadata(CrateCommands.CRATE_ITEM_DATA_KEY).firstOrNull()?.asString() ?: return
+        val crateById = plugin.crateManager.getCrateById(crateId) ?: return
 
+        val usedItem = event.item
+        val keyData = usedItem?.getData(CrateCommands.CRATE_KEY_DATA_KEY)
 
-        if (!player.isOp && event.action in listOf(Action.LEFT_CLICK_BLOCK, Action.RIGHT_CLICK_BLOCK)) {
+        val isRightClick = action == Action.RIGHT_CLICK_BLOCK
+        val isLeftClick = action == Action.LEFT_CLICK_BLOCK
+
+        // Prevent non-ops from breaking crates
+        if (!player.isOp && isLeftClick) {
             event.isCancelled = true
-        }
-
-        if (player.isOp && event.action == Action.RIGHT_CLICK_BLOCK) {
-            event.isCancelled = true
-        }
-
-        val usedItem = event.item ?: return
-
-        val keyData = usedItem.getData(CrateCommands.CRATE_KEY_DATA_KEY)
-
-        if (keyData == null) {
             return
         }
 
-        if (plugin.playerStateManager.isOpeningCrate(player.uuid)) {
-            player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BASS, 0.8f, 0.5f)
-            player.sendStyled(plugin.config.getString("already-opening-crate")!!)
+        // Right click w invalid item
+        if (isRightClick && (usedItem == null || keyData == null)) {
+            CratePreviewGUI(player, crateById)
+            event.isCancelled = true
             return
         }
 
-        if (crateId == keyData) {
-            event.isCancelled = player.isOp
-            usedItem.amount -= 1
+        // Invalid key
+        if (isRightClick && keyData != crateId) {
+            player.sendStyled(plugin.config.getString("wrong-key")!!)
+            event.isCancelled = true
+            return
+        }
 
-            val slot = player.inventory.heldItemSlot
-            if (usedItem.amount <= 0) {
-                player.inventory.setItem(slot, null);
-            } else {
-                player.inventory.setItem(slot, usedItem);
+        // valid key
+        if (isRightClick) {
+            if (plugin.playerStateManager.isOpeningCrate(player.uniqueId)) {
+                player.playSound(player, Sound.BLOCK_NOTE_BLOCK_BASS, 0.8f, 0.5f)
+                player.sendStyled(plugin.config.getString("already-opening-crate")!!)
+                event.isCancelled = true
+                return
             }
 
-            val crateConfig = plugin.crateManager.getCrateById(crateId)!!
-            val animation = plugin.crateAnimationRegistry.get(crateConfig.animationId, crateConfig)!!
+            event.isCancelled = true
+
+            if (usedItem == null) return
+            usedItem.amount -= 1
+            val slot = player.inventory.heldItemSlot
+            if (usedItem.amount <= 0) {
+                player.inventory.setItem(slot, null)
+            } else {
+                player.inventory.setItem(slot, usedItem)
+            }
+
+            val animation = plugin.crateAnimationRegistry.get(crateById.animationId, crateById)!!
             animation.startAnimation(player, crate.location.clone().add(0.5, 1.0, 0.5))
-        } else {
-            player.sendStyled(plugin.config.getString("wrong-key")!!)
         }
     }
+
 
     @EventHandler
     fun onPlace(event: BlockPlaceEvent) {

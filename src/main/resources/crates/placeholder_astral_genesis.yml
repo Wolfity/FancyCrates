@@ -63,11 +63,10 @@ crate:
       lore:
         - "<gray>Useful for enchanting"
     8:
-      item: GOLD
+      item: GOLD_INGOT
       amount: 32
       weight: 6
       displayName: "<aqua>Stack of Gold"
-
     9:
       item: EMERALD
       amount: 32

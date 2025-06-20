@@ -8,11 +8,12 @@ import me.wolfity.fancycrates.crate.CrateRewardConfig
 import net.kyori.adventure.text.Component
 import org.bukkit.inventory.ItemStack
 
-fun CrateRewardConfig.toItemStack(): ItemStack {
+fun CrateRewardConfig.toItemStack(additionalLore: List<Component> = listOf()): ItemStack {
+    val combinedLore = (lore?.map { msg -> style(msg) } ?: listOf()) + additionalLore
     return ItemBuilder(item).apply {
         setAmount(amount)
         displayName?.let { setName(style(it)) }
-        lore?.let { setLore(it.map { msg -> style(msg) }) }
+        setLore(combinedLore)
         enchants?.forEach { (enchant, level) -> addEnchant(enchant, level) }
     }.build()
 }

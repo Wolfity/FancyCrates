@@ -12,6 +12,8 @@ import org.bukkit.Location
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
+import kotlin.math.pow
+import kotlin.math.round
 import kotlin.random.Random
 
 fun runSync(block: () -> Unit) {
@@ -63,4 +65,9 @@ fun fromCleanString(clean: String): UUID {
             clean.substring(20)
 
     return UUID.fromString(dashed)
+}
+
+fun Double.roundToDecimals(decimals: Int): Double {
+    val factor = 10.0.pow(decimals)
+    return round(this * factor) / factor
 }

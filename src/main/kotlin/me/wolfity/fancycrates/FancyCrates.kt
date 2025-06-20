@@ -2,6 +2,7 @@ package me.wolfity.fancycrates
 
 import me.wolfity.developmentutil.ext.registerListener
 import me.wolfity.developmentutil.files.CustomConfig
+import me.wolfity.developmentutil.gui.GUIListener
 import me.wolfity.developmentutil.misc.UpdateChecker
 import me.wolfity.developmentutil.player.PlayerManager
 import me.wolfity.fancycrates.animation.AnimationRegistry
@@ -82,6 +83,7 @@ class FancyCrates : JavaPlugin() {
 
     private fun registerListeners() {
         CrateListeners().registerListener(this)
+        GUIListener().registerListener(this)
         updateChecker.registerListener(this)
     }
 
