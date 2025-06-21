@@ -1,7 +1,6 @@
 name: FancyCrates
 version: '1.1.0'
 main: me.wolfity.fancycrates.FancyCrates
-api-version: '1.21'
 
 depend:
   - DecentHolograms
