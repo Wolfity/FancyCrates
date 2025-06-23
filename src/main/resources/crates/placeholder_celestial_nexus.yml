@@ -4,6 +4,10 @@ crate:
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Celestial Nexus Crate"
   crate-block: ENDER_CHEST
+  crate-hologram-text: "<green>Celestial Nexus Crate"
+  crate-preview-gui-title: "<red>Previewing Celestial Nexus Crate"
+  crate-hologram-y-level: 2.0
+  
   crate-rewards:
     1:
       item: DIAMOND_SWORD

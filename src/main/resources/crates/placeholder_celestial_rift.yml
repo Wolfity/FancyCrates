@@ -3,6 +3,9 @@ crate:
   animation-id: "celestial_rift"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Celestial Rift Crate"
+  crate-hologram-text: "<green>Celestial Rift Crate"
+  crate-preview-gui-title: "<red>Previewing Celestial Rift Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

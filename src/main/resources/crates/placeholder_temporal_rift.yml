@@ -6,6 +6,9 @@ crate:
   animation-id: "temporal_rift"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Temporal Rift Crate"
+  crate-hologram-text: "<green>Temporal Rift Crate"
+  crate-preview-gui-title: "<red>Previewing Temporal Rift Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

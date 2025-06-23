@@ -45,11 +45,12 @@ fun weightedRandomItem(weightedItems: Map<ItemStack, Int>): ItemStack? {
 
 fun CrateLocation.addCrateHologram(crateConfig: CrateConfig) {
     val location = Location(Bukkit.getWorld(world), x, y, z)
-    val holo = DHAPI.createHologram(this.id.toCleanString(), location.clone().add(0.5, 2.0, 0.5))
+    val holo =
+        DHAPI.createHologram(this.id.toCleanString(), location.clone().add(0.5, crateConfig.crateHologramYLevel, 0.5))
     DHAPI.addHologramLine(
         holo,
         0,
-        miniMessageToLegacy(miniMessageToLegacy(serialize(style(crateConfig.displayName))))
+        miniMessageToLegacy(miniMessageToLegacy(serialize(crateConfig.crateHologramTitle)))
     )
 }
 

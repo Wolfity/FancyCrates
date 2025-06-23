@@ -3,6 +3,9 @@ crate:
   animation-id: "crystal_boom"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Crystal Boom Crate"
+  crate-hologram-text: "<green>Crystal Boom Crate"
+  crate-preview-gui-title: "<red>Previewing Crystal Boom Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

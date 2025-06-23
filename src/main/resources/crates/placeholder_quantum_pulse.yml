@@ -3,6 +3,9 @@ crate:
   animation-id: "quantum_pulse"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Quantum Pulse Crate"
+  crate-hologram-text: "<green>Quantum Pulse Crate"
+  crate-preview-gui-title: "<red>Previewing Quantum Pulse Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

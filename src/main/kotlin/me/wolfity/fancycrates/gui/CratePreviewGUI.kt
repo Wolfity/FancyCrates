@@ -10,7 +10,7 @@ import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.entity.Player
 
 class CratePreviewGUI(player: Player, private val config: CrateConfig) :
-    GUI(plugin, 54, style("${config.displayName} Preview"), player) {
+    GUI(plugin, 54, config.cratePreviewGuiTitle, player) {
 
     init {
         constructGUI()

@@ -3,6 +3,9 @@ crate:
   animation-id: "galactic_drop"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Galactic Drop Crate"
+  crate-hologram-text: "<green>Astral Galactic Drop Crate"
+  crate-preview-gui-title: "<red>Previewing Galactic Drop Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

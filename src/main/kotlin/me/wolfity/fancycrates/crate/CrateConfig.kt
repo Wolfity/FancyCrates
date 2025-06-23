@@ -1,5 +1,6 @@
 package me.wolfity.fancycrates.crate
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
 import org.bukkit.enchantments.Enchantment
@@ -11,7 +12,10 @@ data class CrateConfig(
     val crateKeyMaterial: Material,
     val animationId: String,
     val crateBlock: Material,
-    val rewards: List<CrateRewardConfig>
+    val rewards: List<CrateRewardConfig>,
+    val crateHologramTitle: Component,
+    val crateHologramYLevel: Double,
+    val cratePreviewGuiTitle: Component
 )
 
 data class CrateRewardConfig(

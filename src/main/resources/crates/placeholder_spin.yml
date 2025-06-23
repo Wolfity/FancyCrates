@@ -3,6 +3,9 @@ crate:
   animation-id: "spin"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Spin Crate"
+  crate-hologram-text: "<green>Spin Crate"
+  crate-preview-gui-title: "<red>Previewing Spin Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

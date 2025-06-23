@@ -3,6 +3,9 @@ crate:
   animation-id: "astral_genesis"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Astral Genesis Crate"
+  crate-hologram-text: "<green>Astral Genesis Crate"
+  crate-preview-gui-title: "<red>Previewing Astral Genesis Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:

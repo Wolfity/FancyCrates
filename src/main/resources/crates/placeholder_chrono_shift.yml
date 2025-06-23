@@ -3,6 +3,9 @@ crate:
   animation-id: "chrono_shift"
   key-item: TRIPWIRE_HOOK
   crate-display-name: "<gold><bold>Chrono Shift Crate"
+  crate-hologram-text: "<green>Chrono Shift Crate"
+  crate-preview-gui-title: "<red>Previewing Chrono Shift Crate"
+  crate-hologram-y-level: 2.0
   crate-block: ENDER_CHEST
   crate-rewards:
     1:
