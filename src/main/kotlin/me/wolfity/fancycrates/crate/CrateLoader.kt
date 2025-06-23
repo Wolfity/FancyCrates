@@ -29,7 +29,7 @@ class CrateLoader {
                 val crateDisplayName: String = crateSection["crate-display-name"].toString()
                 val crateHologramYLevel = crateSection["crate-hologram-y-level"] as Double? ?: 2.0
                 val cratePreviewGuiTitle = crateSection["crate-preview-gui-title"]?.toString() ?: crateDisplayName
-                val crateHologramTitle = crateSection["crate-hologram0-text"]?.toString() ?: crateDisplayName
+                val crateHologramTitle = crateSection["crate-hologram-text"]?.toString() ?: crateDisplayName
                 val crateBlock = (Material.valueOf(crateSection["crate-block"].toString()))
                 val rewardsSection = crateSection["crate-rewards"] as? Map<*, *> ?: return@forEach
                 val animationId = crateSection["animation-id"] as? String
