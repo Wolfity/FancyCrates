@@ -56,13 +56,13 @@ class CrateCommands {
     @Command("fancycrate giveall", "fancycrates giveall", "fc giveall")
     @CommandPermission(ADMIN_PERMISSION)
     fun onGiveAll(
-        sender: Player,
+        sender: BukkitCommandActor,
         @Named("crate") crateName: CrateParameter,
         @Named("amount") @Range(min = 1.0) amountOfKeys: Int,
     ) {
         val crate = plugin.crateManager.getCrateById(crateName.key)
         if (crate == null) {
-            sender.sendStyled("<red>This crate does not exist!")
+            sender.reply(style("<red>This crate does not exist!"))
             return
         }
 
