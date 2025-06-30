@@ -5,6 +5,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -24,7 +25,7 @@ class GalacticDropAnimation(crateConfig: CrateConfig) : HologramAnimation("galac
         val dropPos = location.clone().add(0.0, currentY - location.y, 0.0)
 
         if (fallHologram == null) {
-            fallHologram = createItemHologram(dropPos, rewardItem)
+            fallHologram = createItemHologram(dropPos, rewardItem.toItemStack())
         } else {
             moveHologram(fallHologram!!, dropPos)
         }
@@ -53,7 +54,7 @@ class GalacticDropAnimation(crateConfig: CrateConfig) : HologramAnimation("galac
 
         fallHologram?.let { DHAPI.removeHologram(it.name) }
 
-        rewardHologram = createItemHologram(location.clone().add(0.0, 1.0, 0.0), rewardItem)
+        rewardHologram = createItemHologram(location.clone().add(0.0, 1.0, 0.0), rewardItem.toItemStack())
 
         repeat(3) {
             world.spawnParticle(Particle.CRIT, location.clone().add(0.0, 2.0, 0.0), 20, 0.5, 0.5, 0.5, 0.0)

@@ -6,6 +6,7 @@ import me.wolfity.developmentutil.util.serialize
 import me.wolfity.developmentutil.util.style
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.crate.CrateLocation
+import me.wolfity.fancycrates.crate.CrateRewardConfig
 import me.wolfity.fancycrates.plugin
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -24,7 +25,7 @@ fun runSync(block: () -> Unit) {
     }.runTask(plugin)
 }
 
-fun weightedRandomItem(weightedItems: Map<ItemStack, Int>): ItemStack? {
+fun weightedRandomItem(weightedItems: Map<CrateRewardConfig, Int>): CrateRewardConfig? {
     if (weightedItems.isEmpty()) return null
 
     val totalWeight = weightedItems.values.sum()

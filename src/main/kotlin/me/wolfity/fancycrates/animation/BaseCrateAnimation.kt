@@ -3,6 +3,7 @@ package me.wolfity.fancycrates.animation
 import me.wolfity.developmentutil.ext.uuid
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.plugin
+import me.wolfity.fancycrates.util.runSync
 import me.wolfity.fancycrates.util.toItemStack
 import me.wolfity.fancycrates.util.weightedRandomItem
 import org.bukkit.Bukkit
@@ -15,10 +16,10 @@ abstract class BaseCrateAnimation(
     val config: CrateConfig
 ) : CrateAnimation {
 
-    protected val contents = config.rewards.map { it.toItemStack() }
+    protected val contents = config.rewards
 
     protected val rewardItem by lazy {
-        weightedRandomItem(config.rewards.associate { it.toItemStack() to it.weight })!!
+        weightedRandomItem(config.rewards.associate { it to it.weight })!!
     }
 
     var taskId = -1
@@ -46,6 +47,15 @@ abstract class BaseCrateAnimation(
     )
 
     protected open fun onEnd(player: Player, location: Location) {
-        player.inventory.addItem(rewardItem)
+        if (rewardItem.command != null) {
+            runSync {
+                Bukkit.getServer().dispatchCommand(
+                    Bukkit.getConsoleSender(),
+                    rewardItem.command!!.replace("{player}", player.name)
+                )
+            }
+        } else {
+            player.inventory.addItem(rewardItem.toItemStack())
+        }
     }
 }

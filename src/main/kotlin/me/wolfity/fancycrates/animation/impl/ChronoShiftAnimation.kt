@@ -2,6 +2,7 @@ package me.wolfity.fancycrates.animation.impl
 
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -25,7 +26,7 @@ class ChronoShiftAnimation(crateConfig: CrateConfig) : HologramAnimation("chrono
         } else {
             
             if (rewardHologram == null) {
-                rewardHologram = createItemHologram(center, rewardItem)
+                rewardHologram = createItemHologram(center, rewardItem.toItemStack())
 
                 world.spawnParticle(Particle.FLASH, center, 10)
                 world.spawnParticle(Particle.EXPLOSION, center, 1)

@@ -22,6 +22,7 @@ data class CrateRewardConfig(
     val item: Material,
     val amount: Int,
     val weight: Int,
+    val command: String? = null,
     val displayName: String? = null,
     val lore: List<String>? = null,
     val enchants: Map<Enchantment, Int>? = null

@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.holograms.Hologram
 
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -22,12 +23,12 @@ class SpinAnimation(crateConfig: CrateConfig) : HologramAnimation("spin", 5000L,
         val now = System.currentTimeMillis()
 
         if (hologram == null) {
-            hologram = createItemHologram(center, contents.first())
+            hologram = createItemHologram(center, contents.first().toItemStack())
         }
 
         if (!ended && now - lastSwitchTime > interval) {
             val item = contents[currentIndex % contents.size]
-            updateHologramIcon(hologram!!, item)
+            updateHologramIcon(hologram!!, item.toItemStack())
             player.playSound(location, Sound.UI_BUTTON_CLICK, 0.4f, 1.0f + progress.toFloat())
             currentIndex++
             lastSwitchTime = now
@@ -36,7 +37,7 @@ class SpinAnimation(crateConfig: CrateConfig) : HologramAnimation("spin", 5000L,
             interval = (50 + (progress * 450)).toLong()
 
             if (progress >= 0.9) {
-                updateHologramIcon(hologram!!, rewardItem)
+                updateHologramIcon(hologram!!, rewardItem.toItemStack())
                 rewardHologram = hologram
                 ended = true
                 location.world?.spawnParticle(Particle.TOTEM_OF_UNDYING, center, 10, 0.3, 0.5, 0.3)

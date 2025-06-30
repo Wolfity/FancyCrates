@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.plugin
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -46,7 +47,7 @@ class CrystalBoomAnimation(crateConfig: CrateConfig) : HologramAnimation("crysta
         val world = location.world!!
         val center = location.clone().add(0.0, 1.0, 0.0)
 
-        rewardHologram = createItemHologram(center, rewardItem)
+        rewardHologram = createItemHologram(center, rewardItem.toItemStack())
 
         player.playSound(center, Sound.BLOCK_AMETHYST_BLOCK_CHIME, 0.4f, 0.4f)
         world.spawnParticle(Particle.END_ROD, center.clone().add(0.0, 1.5, 0.0), 30, 0.2, 0.5, 0.2)

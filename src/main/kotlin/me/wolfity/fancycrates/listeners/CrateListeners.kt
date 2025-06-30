@@ -38,9 +38,9 @@ class CrateListeners : Listener {
     fun onInteract(event: PlayerInteractEvent) {
         val player = event.player
         val action = event.action
-        val crate = event.clickedBlock ?: return
+        val clickedBlock = event.clickedBlock ?: return
 
-        val crateId = crate.getMetadata(CrateCommands.CRATE_ITEM_DATA_KEY).firstOrNull()?.asString() ?: return
+        val crateId = clickedBlock.getMetadata(CrateCommands.CRATE_ITEM_DATA_KEY).firstOrNull()?.asString() ?: return
         val crateById = plugin.crateManager.getCrateById(crateId) ?: return
 
         val usedItem = event.item
@@ -90,7 +90,7 @@ class CrateListeners : Listener {
             }
 
             val animation = plugin.crateAnimationRegistry.get(crateById.animationId, crateById)!!
-            animation.startAnimation(player, crate.location.clone().add(0.5, 1.0, 0.5))
+            animation.startAnimation(player, clickedBlock.location.clone().add(0.5, 1.0, 0.5))
         }
     }
 
@@ -98,6 +98,9 @@ class CrateListeners : Listener {
     @EventHandler
     fun onPlace(event: BlockPlaceEvent) {
         val block = event.block
+        if (event.itemInHand.getData(CrateCommands.CRATE_KEY_DATA_KEY) != null) {
+            event.isCancelled = true
+        }
         val blockData = event.itemInHand.getData(CrateCommands.CRATE_ITEM_DATA_KEY) ?: return
         block.setMetadata(
             CrateCommands.CRATE_ITEM_DATA_KEY,

@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -30,7 +31,7 @@ class CelestialNexusAnimation(crateConfig: CrateConfig) :
                 val angle = 2 * Math.PI * i / count
                 val dist = 4.0
                 val pos = center.clone().add(cos(angle) * dist, 0.0, sin(angle) * dist)
-                val holo = createItemHologram(pos, item)
+                val holo = createItemHologram(pos, item.toItemStack())
                 orbitHolograms[holo] = angle
             }
         }
@@ -119,7 +120,7 @@ class CelestialNexusAnimation(crateConfig: CrateConfig) :
         val world = location.world ?: return
         val center = location.clone().add(0.0, 1.0, 0.0)
 
-        rewardHologram = createItemHologram(center, rewardItem)
+        rewardHologram = createItemHologram(center, rewardItem.toItemStack())
 
         orbitHolograms.keys.forEach { holo ->
             DHAPI.removeHologram(holo.name)

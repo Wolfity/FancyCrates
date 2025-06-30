@@ -5,6 +5,7 @@ import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.util.runSync
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -25,14 +26,14 @@ class TemporalRiftAnimation(crateConfig: CrateConfig) : HologramAnimation("tempo
         val bobbingOffset = sin(progress * Math.PI * 4) * 0.1 + 1.5
 
         if (glitchHologram == null) {
-            glitchHologram = createItemHologram(location.clone().add(0.0, bobbingOffset, 0.0), contents.random())
+            glitchHologram = createItemHologram(location.clone().add(0.0, bobbingOffset, 0.0), contents.random().toItemStack())
         } else {
             val holo = glitchHologram!!
             moveHologram(holo, location.clone().add(0.0, bobbingOffset, 0.0))
 
             val glitchChance = 0.1 + progress * 0.6
             if (Random.nextDouble() < glitchChance) {
-                updateHologramIcon(holo, contents.random())
+                updateHologramIcon(holo, contents.random().toItemStack())
             }
         }
 
@@ -63,7 +64,7 @@ class TemporalRiftAnimation(crateConfig: CrateConfig) : HologramAnimation("tempo
         val world = location.world ?: return
 
         runSync {
-            rewardHologram = createItemHologram(location.clone().add(0.0, 1.5, 0.0), rewardItem)
+            rewardHologram = createItemHologram(location.clone().add(0.0, 1.5, 0.0), rewardItem.toItemStack())
 
             glitchHologram?.let { DHAPI.removeHologram(it.name) }
 

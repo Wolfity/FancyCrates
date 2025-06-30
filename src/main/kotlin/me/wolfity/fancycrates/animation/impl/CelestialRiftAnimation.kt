@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.plugin
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -71,7 +72,7 @@ class CelestialRiftAnimation(crateConfig: CrateConfig) : HologramAnimation("cele
 
 
         rewardHologram =
-            createItemHologram(center, rewardItem)
+            createItemHologram(center, rewardItem.toItemStack())
 
         world.spawnParticle(Particle.WITCH, center.clone().add(0.0, 2.0, 0.0), 20, 0.3, 0.5, 0.3, 0.01)
         player.playSound(center, Sound.ENTITY_ENDERMAN_TELEPORT, 0.4f, 0.4f)

@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
 import me.wolfity.fancycrates.util.runSync
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -74,7 +75,7 @@ class CelestialRiteAnimation(crateConfig: CrateConfig) : HologramAnimation("cele
             world.spawnParticle(Particle.FLASH, center, 1)
 
             runSync {
-                rewardHologram = createItemHologram(center.clone().add(0.0, 0.7, 0.0), rewardItem)
+                rewardHologram = createItemHologram(center.clone().add(0.0, 0.7, 0.0), rewardItem.toItemStack())
             }
         }
 

@@ -76,3 +76,9 @@ crate:
       amount: 32
       weight: 6
       displayName: "<aqua>Stack of Emerald"
+    10:
+      item: PAPER
+      amount: 1
+      weight: 20
+      displayName: "<green>1000$"
+      reward-command: "eco give {player} 1000"

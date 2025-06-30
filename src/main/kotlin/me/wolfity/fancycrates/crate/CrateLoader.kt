@@ -40,7 +40,7 @@ class CrateLoader {
                     val material = Material.matchMaterial(rewardData["item"] as? String ?: "") ?: return@mapNotNull null
                     val amount = (rewardData["amount"] as? Int) ?: 1
                     val weight = (rewardData["weight"] as? Int) ?: 1
-
+                    val rewardCommand: String? = rewardData["reward-command"]?.toString()
                     val displayName = rewardData["displayName"] as? String
                     val lore = rewardData["lore"] as? List<String>
 
@@ -58,6 +58,7 @@ class CrateLoader {
                         item = material,
                         amount = amount,
                         weight = weight,
+                        command = rewardCommand,
                         displayName = displayName,
                         lore = lore,
                         enchants = enchantsMap.takeIf { it.isNotEmpty() }

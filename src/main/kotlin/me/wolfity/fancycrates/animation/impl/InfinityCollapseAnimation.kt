@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -26,7 +27,7 @@ class InfinityCollapseAnimation(crateConfig: CrateConfig) : HologramAnimation("i
                 val angle = 2 * PI * i / contents.size
                 val dist = 2.5
                 val pos = center.clone().add(cos(angle) * dist, 0.3, sin(angle) * dist)
-                val holo = createItemHologram(pos, item)
+                val holo = createItemHologram(pos, item.toItemStack())
                 hologramMap[holo] = angle
             }
         }
@@ -55,7 +56,7 @@ class InfinityCollapseAnimation(crateConfig: CrateConfig) : HologramAnimation("i
             DHAPI.removeHologram(holo.name)
         }
 
-        rewardHologram = createItemHologram(location.clone().add(0.0, 1.8, 0.0), rewardItem!!)
+        rewardHologram = createItemHologram(location.clone().add(0.0, 1.8, 0.0), rewardItem.toItemStack())
 
         world.spawnParticle(Particle.EXPLOSION, location.clone().add(0.0, 1.0, 0.0), 1)
         player.playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 0.4f, 0.8f)

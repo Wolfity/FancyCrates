@@ -4,6 +4,7 @@ import eu.decentsoftware.holograms.api.DHAPI
 import eu.decentsoftware.holograms.api.holograms.Hologram
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -28,7 +29,7 @@ class QuantumPulseAnimation(crateConfig: CrateConfig) : HologramAnimation("quant
             currentHologram?.let { DHAPI.removeHologram(it.name) }
 
             val item = contents[index]
-            currentHologram = createItemHologram(center, item)
+            currentHologram = createItemHologram(center, item.toItemStack())
         }
 
         player.world.spawnParticle(Particle.ELECTRIC_SPARK, center, 8, 0.3, 0.3, 0.3, 0.2)
@@ -43,7 +44,7 @@ class QuantumPulseAnimation(crateConfig: CrateConfig) : HologramAnimation("quant
             currentHologram = null
         }
 
-        rewardHologram = createItemHologram(center, rewardItem)
+        rewardHologram = createItemHologram(center, rewardItem.toItemStack())
         player.playSound(center, Sound.BLOCK_BEACON_POWER_SELECT, 0.4f, 0.8f)
         player.world.spawnParticle(Particle.FLASH, center, 20, 0.4, 0.4, 0.4, 0.05)
 

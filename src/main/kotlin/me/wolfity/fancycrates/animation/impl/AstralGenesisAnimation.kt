@@ -2,6 +2,7 @@ package me.wolfity.fancycrates.animation.impl
 
 import me.wolfity.fancycrates.animation.HologramAnimation
 import me.wolfity.fancycrates.crate.CrateConfig
+import me.wolfity.fancycrates.util.toItemStack
 import org.bukkit.Color
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -19,7 +20,7 @@ class AstralGenesisAnimation(crateConfig: CrateConfig) : HologramAnimation("astr
         val world = location.world ?: return
         val center = location.clone().add(0.0, 1.5, 0.0)
 
-        
+
         if (progress < 0.3) {
             val swirl = 10
             val radius = 2.5 * (progress / 0.3)
@@ -40,7 +41,7 @@ class AstralGenesisAnimation(crateConfig: CrateConfig) : HologramAnimation("astr
             }
         }
 
-        
+
         if (progress in 0.3..0.6) {
             val beamFrom = center.clone().add(0.0, 1.0 * (1 - (progress - 0.3) / 0.3), 0.0)
             world.spawnParticle(Particle.ELECTRIC_SPARK, beamFrom, 10, 0.1, 0.5, 0.1)
@@ -52,10 +53,10 @@ class AstralGenesisAnimation(crateConfig: CrateConfig) : HologramAnimation("astr
             }
         }
 
-        
+
         if (!hasSpawned && progress >= 0.65) {
             if (rewardHologram == null) {
-                rewardHologram = createItemHologram(center.clone().add(0.0, 0.5, 0.0), rewardItem)
+                rewardHologram = createItemHologram(center.clone().add(0.0, 0.5, 0.0), rewardItem.toItemStack())
             }
             hasSpawned = true
 
@@ -70,14 +71,14 @@ class AstralGenesisAnimation(crateConfig: CrateConfig) : HologramAnimation("astr
             player.playSound(center, Sound.BLOCK_END_PORTAL_SPAWN, 0.4f, 0.8f)
         }
 
-        
+
         if (hasSpawned) {
             val y = 1.5 - ((progress - 0.75) / 0.25) * 2.5
             val loc = center.clone().add(0.0, y, 0.0)
             rewardHologram?.let {
                 moveHologram(it, loc)
             }
-            
+
             val orbitCount = 8
             val orbRad = 1.2
             repeat(orbitCount) {
